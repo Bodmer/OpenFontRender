@@ -1488,8 +1488,11 @@ uint16_t OpenFontRender::decodeUTF8(uint8_t *buf, uint16_t *index, uint16_t rema
 		return c | ((buf[(*index)++] & 0x3F));
 	}
 
-	// 21 bit Unicode not supported so fall-back to extended ASCII
-	// if ((c & 0xF8) == 0xF0) return c;
+  // 21 bit Unicode not supported yet (requires 32 bit return value)
+  // if (((c & 0xF8) == 0xF0) && (remaining > 3)) {
+  // c = ((c & 0x07) << 18) | ((buf[(*index)++] & 0x03F) << 12);
+  // c |= ((buf[(*index)++] & 0x3F) << 6);
+  // return c | ((buf[(*index)++] & 0x3F));
 
 	return c; // fall-back to extended ASCII
 }
